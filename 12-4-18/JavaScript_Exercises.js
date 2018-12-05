@@ -182,41 +182,76 @@ function positiveNumbers (array) {
 
 // Bonus: Caeser Cipher
 
-// function caeserCipher (message, shift) {
-
-//     message = message.toLowerCase();
-//     var alphabet = "abcdefghijklmnopqrstuvwxyz";
-//     var result = "";
-
-
-
-//     return
-// }
-
 function caeserCipher (message, shift) {
-    
+
     message = message.toLowerCase();
     var array = message.split(" ");
-    var resultArray = [];
+    var newArray = [];
+    var alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-    for (var word = 0; word < array.length; word ++) {
-        
-        var letterResult = "";
-        var charcode = 0;
-        
-        for (var letter = 0; letter < array[word].length; letter ++) {
-            charcode = (array[word][letter].charCodeAt()) + shift;
-            letterResult += String.fromCharCode(charcode);
-        }
-        
-        resultArray.push(letterResult);
+    if (shift > 25) {
+        shift = shift % 26;
     }
 
-    return resultArray.join(" ");
+    for (var i = 0; i < array.length; i ++) {
+        var word = [];
+        for (var j = 0; j < array[i].length; j ++) {
+            var index = alphabet.indexOf(array[i][j]);
+            if (shift + index > 25) {
+                var letter = alphabet[index + shift - 26];
+            }
+            else {
+                var letter = alphabet[index + shift];
+            }
+            word.push(letter);
+        }
+        newArray.push(
+            word.join("")
+        );
+    }
+    return newArray.join(" ");
 }
 
-console.log(caeserCipher("You must unlearn what you have learned", 12));
+// The first one tests a shift of 13 while the second tests a shift of 14
+
+console.log(caeserCipher("Genius without education is like silver in the mine", 13));
+console.log(caeserCipher("Genius without education is like silver in the mine", 14));
 
 // --------------------------------------------------------------------------------------------
 
 // Bonus: Caeser Cipher 2
+
+function caeserDecipher (message, shift) {
+
+    message = message.toLowerCase();
+    var array = message.split(" ");
+    var newArray = [];
+    var alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    if (shift > 25) {
+        shift = shift % 26;
+    }
+
+    for (var i = 0; i < array.length; i ++) {
+        var word = [];
+        for (var j = 0; j < array[i].length; j ++) {
+            var index = alphabet.indexOf(array[i][j]);
+            if (shift > index) {
+                var letter = alphabet[index - shift + 26];
+            }
+            else {
+                var letter = alphabet[index - shift];
+            }
+            word.push(letter);
+        }
+        newArray.push(
+            word.join("")
+        );
+    }
+    return newArray.join(" ");
+}
+
+// Both should decipher into the starting phrase, "Genius... mine"
+
+console.log(caeserDecipher("Travhf jvgubhg rqhpngvba vf yvxr fvyire va gur zvar", 13))
+console.log(caeserDecipher("usbwig kwhvcih sriqohwcb wg zwys gwzjsf wb hvs awbs", 14))
