@@ -59,30 +59,26 @@ class Person {
     }
 
     lazyGreet (other) {
-        var name = this.name;
-        var otherName = other.name;
-        setTimeout(function (name, otherName) {
-            return 'Yo ' + otherName + '! from ' + name + '.'; 
-        }, 2000);
+        setTimeout(() => console.log(`Yo ${other.name} from ${this.name}.`), 2000);
     }
 
     createGreetingsForFriends () {
-        // console.log(this.friends.map(function(a) {return this.createGreeting(a);}));
-        let name = this.name;
-        return this.friends.map(function(other) {return "Yo " + other.name + "! from " + name + ".";});
+        // return this.friends.map((other) => {return "Yo " + other.name + "! from " + name + ".";});
+        return this.friends.map((other) => this.createGreeting(other));
     }
 
 }
 
 aPerson = new Person("Veronica");
 aPerson2 = new Person("Paul");
+
 // console.log(aPerson.greet(aPerson2));
 
 // -------------------------------------------------------------------------------------------
 
 // Thesis Thises
 
-// console.log(aPerson.lazyGreet(aPerson2));
+aPerson.lazyGreet(aPerson2);
 
 // -------------------------------------------------------------------------------------------
 
